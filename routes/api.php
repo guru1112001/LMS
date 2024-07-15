@@ -92,6 +92,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('password/change', [PasswordResetController::class, 'changePassword']);
 
     //Route::get('/Syllabus',[\App\Http\Controllers\SyllabusController::class,'getUserSyllabus']);
+    Route::get('/syllabus/list', [\App\Http\Controllers\SyllabusController::class, 'getCompletedSyllabus']);
 
     Route::get('/attendances', [\App\Http\Controllers\AttendanceController::class, 'index']);
     Route::get('/attendance-report', [\App\Http\Controllers\AttendanceController::class, 'getAttendanceReport']);

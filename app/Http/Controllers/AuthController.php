@@ -21,21 +21,23 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'fcm_token' => 'nullable|string',
         ]);
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            $user->update(['fcm_token' => $request->input('fcm_token')]);
             $token = $user->createToken('appToken')->plainTextToken;
 
             return response()->json([
                 'message' => 'Login successful',
                 'token' => $token,
+                'fcm_token' => $user->fcm_token,
                 'data' => [
-                    'user' => new UserResource($user), // Return the user resource here
+                    'user' => new UserResource($user),
                 ],
             ]);
         }
-
         return response()->json(['message' => 'The provided credentials do not match our records.'], 401);
     }
 

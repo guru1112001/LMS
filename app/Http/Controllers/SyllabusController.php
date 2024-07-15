@@ -28,4 +28,14 @@ class SyllabusController extends Controller
         
         return SyllabusResource::collection($syllabus);
     }
+    public function getCompletedSyllabus(Request $request)
+    {
+        $batchId = $request->input('batch_id');
+
+        $completedSyllabus = Syllabus::where('batch_id', $batchId)
+            ->where('status', 'Completed')
+            ->get();
+
+        return SyllabusResource::collection($completedSyllabus);
+    }
 }

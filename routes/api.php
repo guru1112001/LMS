@@ -1,20 +1,21 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\BatchController;
-use App\Http\Controllers\CurriculumController;
+use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\CalendarController;
-use App\Http\Controllers\TeachingMaterialController;
-use App\Http\Controllers\QualificationController;
-use App\Http\Controllers\LeaveController;
-//use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CurriculumController;
+use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Controllers\PasswordResetController;
+//use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\QualificationController;
+use App\Http\Controllers\TeachingMaterialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,8 +102,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/tutors', [\App\Http\Controllers\UserController::class, 'tutors']);
 
     //api for listing for sections
-
-
+    // Api for Post/Timeline
+    Route::get('posts', [PostController::class, 'index']);
+    // Route::get('posts/{id}', [PostController::class, 'show']);
+    Route::post('posts/like', [PostController::class, 'like']);
+    Route::post('posts/comment', [PostController::class, 'comment']);
 
 //	 Route::get('/attendances', [AttendanceController::class, 'index']);
 //	  Route::get('/batches',[BatchController::class,'get_batches']);

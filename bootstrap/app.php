@@ -52,5 +52,5 @@ $app->singleton(
 |
 */
 
-// $app->loadEnvironmentFrom('.env.loc');
+$app->loadEnvironmentFrom('.env.loc');
 return $app;

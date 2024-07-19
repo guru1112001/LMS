@@ -21,14 +21,14 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-            'fcm_token' => 'nullable|string',
+            
         ]);
-
+// 'fcm_token' => 'nullable|string'
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $user->update(['fcm_token' => $request->input('fcm_token')]);
             $token = $user->createToken('appToken')->plainTextToken;
-
+            $user->update(['fcm_token' => $request->input('fcm_token')]);
+            
             return response()->json([
                 'message' => 'Login successful',
                 'token' => $token,

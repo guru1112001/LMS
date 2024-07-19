@@ -78,30 +78,30 @@ class SendAssignmentReminders extends Command
 
     private function sendPushNotification($user, $assignment, $reminderType)
     {
-        if (!$user->fcm_token) {
-            Log::warning("User {$user->id} does not have an FCM token.");
-            return;
-        }
+        // if (!$user->fcm_token) {
+        //     Log::warning("User {$user->id} does not have an FCM token.");
+        //     return;
+        // }
 
-        $title = "Assignment Due Reminder - {$reminderType} notice";
-        $body = "Your assignment '{$assignment->name}' is due in one {$reminderType}. Due date: {$assignment->start_submission}";
+        // $title = "Assignment Due Reminder - {$reminderType} notice";
+        // $body = "Your assignment '{$assignment->name}' is due in one {$reminderType}. Due date: {$assignment->start_submission}";
 
-        Log::info("Attempting to send notification to user {$user->id} for assignment {$assignment->id}.");
+        // Log::info("Attempting to send notification to user {$user->id} for assignment {$assignment->id}.");
 
         // Send Filament notification to database
         Notification::make()
-            ->title($title)
-            ->body($body)
+            ->title("Assignment Due Reminder - {$reminderType} notice")
+            ->body("Your assignment '{$assignment->name}' is due in one {$reminderType}. Due date: {$assignment->start_submission}")
             ->danger()
             ->sendToDatabase($user);
 
         // Send FCM notification
-        $success = $this->firebaseService->sendNotification($user->fcm_token, $title, $body);
+        // $success = $this->firebaseService->sendNotification($user->fcm_token, $title, $body);
 
-        if ($success) {
-            Log::info("Notification sent successfully to user {$user->id}.");
-        } else {
-            Log::error("Failed to send notification to user {$user->id}.");
-        }
+        // if ($success) {
+        //     Log::info("Notification sent successfully to user {$user->id}.");
+        // } else {
+        //     Log::error("Failed to send notification to user {$user->id}.");
+        // }
     }
 }
